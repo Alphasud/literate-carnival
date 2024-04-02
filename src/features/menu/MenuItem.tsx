@@ -1,6 +1,6 @@
-import { formatCurrency } from "../../utilities/helpers"
+import { formatCurrency } from "../../../utilities/helpers"
 
-function MenuItem({ pizza }) {
+function MenuItem({ pizza }: any): JSX.Element {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza
 
   return (

@@ -1,4 +1,4 @@
-function Home() {
+export default function Home(): JSX.Element {
   return (
     <div>
       <h1>
@@ -7,7 +7,5 @@ function Home() {
         Straight out of the oven, straight to you.
       </h1>
     </div>
-  );
+  )
 }
-
-export default Home;
