@@ -1,11 +1,9 @@
-import { Form, redirect, useActionData, useNavigation } from "react-router-dom"
-import { createOrder } from "../../../service/apiRestaurant"
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
+import { createOrder } from "../../../service/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
-  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
-  )
+  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str);
 
 const fakeCart = [
   {
@@ -29,14 +27,14 @@ const fakeCart = [
     unitPrice: 15,
     totalPrice: 15,
   },
-]
+];
 
 function CreateOrder(): JSX.Element {
-  const navigation = useNavigation()
-  const isSubmitting = navigation.state === "submitting"
-  const formErrors: any = useActionData()
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  const formErrors: any = useActionData();
   // const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart
+  const cart = fakeCart;
 
   return (
     <div>
@@ -45,13 +43,13 @@ function CreateOrder(): JSX.Element {
       <Form method="POST">
         <div>
           <label>First Name</label>
-          <input type="text" name="customer" required />
+          <input type="text" name="customer" required className="input" />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input type="tel" name="phone" required className="input" />
           </div>
           {formErrors?.phone && <div>{formErrors.phone}</div>}
         </div>
@@ -59,7 +57,7 @@ function CreateOrder(): JSX.Element {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input type="text" name="address" required className="input" />
           </div>
         </div>
 
@@ -68,6 +66,7 @@ function CreateOrder(): JSX.Element {
             type="checkbox"
             name="priority"
             id="priority"
+            className="h-6 w-6 accent-yellow-300"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
@@ -76,36 +75,39 @@ function CreateOrder(): JSX.Element {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>
+          <button
+            className="font-smeibold rounded-full bg-yellow-400 px-4 py-3 uppercase tracking-wide text-stone-800 transition-colors duration-300 hover:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Placing order..." : "Order now"}
           </button>
         </div>
       </Form>
     </div>
-  )
+  );
 }
 
 export async function action({ request }: any) {
-  const formData = await request.formData()
-  const data = Object.fromEntries(formData)
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
   const order: any = {
     ...data,
     cart: JSON.parse(data.cart),
     priority: data.priority === "on",
-  }
+  };
 
   // Error handling
-  const errors = {} as any
+  const errors = {} as any;
   if (!isValidPhone(order.phone)) {
-    errors.phone = "Invalid phone number"
+    errors.phone = "Invalid phone number";
   }
   if (Object.keys(errors).length > 0) {
-    return errors
+    return errors;
   }
 
   // if OK then create order & redirect
-  const newOrder = await createOrder(order)
-  return redirect(`/order/${newOrder.id}`)
+  const newOrder = await createOrder(order);
+  return redirect(`/order/${newOrder.id}`);
 }
 
-export default CreateOrder
+export default CreateOrder;
