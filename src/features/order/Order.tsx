@@ -5,7 +5,7 @@ import { getOrder } from "../../../service/apiRestaurant";
 import { calcMinutesLeft, formatCurrency, formatDate } from "../../../utilities/helpers";
 import OrderItem from "./OrderItem";
 
-function Order(): JSX.Element {
+function Order(): React.JSX.Element {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const order: any = useLoaderData();
   const { id, status, priority, priorityPrice, orderPrice, estimatedDelivery, cart } = order;
@@ -39,8 +39,8 @@ function Order(): JSX.Element {
       </div>
 
       <ul className="divide-y divide-stone-200 border-b border-t">
-        {cart.map((item: any) => (
-          <OrderItem key={item.id} item={item} />
+        {cart.map((item: any, index: number) => (
+          <OrderItem key={item.id + index} item={item} />
         ))}
       </ul>
 

@@ -1,8 +1,12 @@
+import { useSelector } from "react-redux";
 import { formatCurrency } from "../../../utilities/helpers";
-import Button from "../../ui/Button";
+import DeleteItem from "./DeleteItem";
+import UpdateItemQuantity from "./UpdateItemQuantity";
+import { getCurrentQuantityById } from "./cartSlice";
 
-function CartItem({ item }: { item: any }): JSX.Element {
+function CartItem({ item }: { item: any }): React.JSX.Element {
   const { pizzaId, name, quantity, totalPrice } = item;
+  const currentQuantity = useSelector(getCurrentQuantityById(pizzaId));
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">
@@ -11,7 +15,8 @@ function CartItem({ item }: { item: any }): JSX.Element {
       </p>
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-semibold">{formatCurrency(totalPrice)}</p>
-        <Button type="small">Delete</Button>
+        <UpdateItemQuantity pizzaId={pizzaId} currentQuantity={currentQuantity} />
+        <DeleteItem pizzaId={pizzaId} />
       </div>
     </li>
   );

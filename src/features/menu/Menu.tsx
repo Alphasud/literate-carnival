@@ -7,7 +7,7 @@ export async function loader() {
   return menu;
 }
 
-export default function Menu(): JSX.Element {
+export default function Menu(): React.JSX.Element {
   const menu: any = useLoaderData();
   return (
     <ul className="divide-y divide-stone-200 px-2">

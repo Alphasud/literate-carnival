@@ -6,7 +6,7 @@ export default function LinkButton({
 }: {
   to: string;
   children: string;
-}): JSX.Element {
+}): React.JSX.Element {
   const navigate = useNavigate();
   const className = "text-blue-500 hover:text-blue-600 hover:underline";
   if (to === "-1") {
